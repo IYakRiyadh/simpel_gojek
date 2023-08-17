@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>93443611592-lvurbtrn1ki908fj19q2a86e44jirhvv.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.93443611592-lvurbtrn1ki908fj19q2a86e44jirhvv</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>93443611592-fjvqg7j5cga4e0ps7k1n2jhmtm34hme2.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAS-UL31mv-RhdqkeQfo7hMtShZ9WrbuVg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>93443611592</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.appGojek</string>
+	<key>PROJECT_ID</key>
+	<string>gojek-396015</string>
+	<key>STORAGE_BUCKET</key>
+	<string>gojek-396015.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:93443611592:ios:79bf3a47689d6d90107efd</string>
+	<key>DATABASE_URL</key>
+	<string>https://gojek-396015-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

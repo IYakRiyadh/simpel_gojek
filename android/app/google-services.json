@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "93443611592",
+    "firebase_url": "https://gojek-396015-default-rtdb.firebaseio.com",
+    "project_id": "gojek-396015",
+    "storage_bucket": "gojek-396015.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93443611592:android:99ad613146872a10107efd",
+        "android_client_info": {
+          "package_name": "com.example.app_gojek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "93443611592-fjvqg7j5cga4e0ps7k1n2jhmtm34hme2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_gojek",
+            "certificate_hash": "de02ee43e0ddf0c68efa28f8ac1910d268aab951"
+          }
+        },
+        {
+          "client_id": "93443611592-6qh283hpcr3kq7o0cbmeak0j0t4vltcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2BvaaJthAX4TGEu98UPB0wQmFeQg-mh8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "93443611592-6qh283hpcr3kq7o0cbmeak0j0t4vltcv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
