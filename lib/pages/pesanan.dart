@@ -20,8 +20,8 @@ class _PesananPageState extends State<PesananPage> {
       ),
       body: Builder(builder: (context) {
         return OSMFlutter(
-          controller: MapController.cyclOSMLayer(
-            initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
+          controller: MapController(
+            initPosition: GeoPoint(latitude: 12.4358055, longitude: 8.4737324),
             areaLimit: BoundingBox(
               east: 10.4922941,
               north: 47.8084648,
