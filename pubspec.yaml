@@ -41,6 +41,7 @@ dependencies:
   flutter_osm_plugin: ^0.60.1
   sqflite: ^2.3.0
   firebase_core: ^2.15.1
+  firebase_auth: ^4.7.3
 
 dev_dependencies:
   flutter_test:
