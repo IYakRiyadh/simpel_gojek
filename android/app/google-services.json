@@ -38,6 +38,13 @@
             {
               "client_id": "93443611592-6qh283hpcr3kq7o0cbmeak0j0t4vltcv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "93443611592-lvurbtrn1ki908fj19q2a86e44jirhvv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appGojek"
+              }
             }
           ]
         }
