@@ -18,6 +18,23 @@ final List<String> iconMenu = [
   'assets/images/menu/club.png',
   'assets/images/menu/more.png',
 ];
+
+final introImg = {
+  'slide1': {
+    'img': 'assets/images/ilus/gojek.png',
+    'keterangan': 'assets/images/ilus/gojek.png',
+  },
+  'slide2': 'assets/images/ilus/img1.png',
+  'slide3': 'assets/images/ilus/img2.png',
+  'slide4': 'assets/images/ilus/img3.png',
+};
+final List<String> keterangan = [
+  'GoRide',
+  'GoCar',
+  'GoFood',
+  'GoSend',
+];
+
 final List<String> lebelMenu = [
   'GoRide',
   'GoCar',

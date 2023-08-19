@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class IntroUser extends StatefulWidget {
@@ -9,101 +10,131 @@ class IntroUser extends StatefulWidget {
 }
 
 class _IntroUserState extends State<IntroUser> {
+  final intro = FirebaseFirestore.instance;
+  Stream<QuerySnapshot<Map<String, dynamic>>>? stream;
+
+  @override
+  void initState() {
+    super.initState();
+    stream = intro.collection('intro').snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CarouselSlider.builder(
-                  itemCount: 4,
-                  itemBuilder: (context, index, realIndex) {
-                    return Container(
-                      child: Column(
-                        // direction: Axis.vertical,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/ilus/img1.jpg'),
-                                  fit: BoxFit.fill,
-                                  alignment: Alignment.center,
-                                ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Center(child: Text('No Internet'));
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(child: Text('Loading..'));
+                        }
+                        final slide = snapshot.data!.docs
+                            .map((doc) => doc.data())
+                            .toList();
+
+                        return CarouselSlider.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index, realIndex) {
+                            var data = slide[index];
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 10.0),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      image: DecorationImage(
+                                        image: NetworkImage('${data['img']}'),
+                                        fit: BoxFit.fill,
+                                        alignment: Alignment.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0,
+                                        top: 15,
+                                        right: 20,
+                                        bottom: 15.0),
+                                    child: Text(
+                                      '${data['keterangan']}',
+                                      style: TextStyle(
+                                        fontSize: 16.5,
+                                        fontFamily: 'Poppins',
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
+                            );
+                          },
+                          options: CarouselOptions(
+                            aspectRatio: 4 / 2,
+                            autoPlay: true,
+                            viewportFraction: 1.0,
+                            enlargeFactor: 0.5,
+                            enlargeCenterPage: true,
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                left: 20.0, top: 15, right: 20, bottom: 15.0),
-                            child: Text(
-                              'Layanan cepat dan aman',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: 'Poppins',
-                              ),
-                            ),
-                          ),
-                        ],
+                        );
+                      }),
+                  const SizedBox(height: 15),
+                  Column(
+                    children: [
+                      Container(
+                        width: size.width,
+                        margin: const EdgeInsets.only(left: 60.0, right: 60.0),
+                        child: MaterialButton(
+                          // minWidth: 100,
+                          height: 40.0,
+                          padding: const EdgeInsets.all(8.0),
+                          color: const Color(0xFF0C8913),
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                width: 2.50,
+                                color: Color(0xFF0C8913),
+                              )),
+                          child: const Text('Masuk sebagai Customer'),
+                          onPressed: () {},
+                        ),
                       ),
-                    );
-                  },
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    viewportFraction: 0.8,
+                      const SizedBox(height: 8.0),
+                      Container(
+                        width: size.width,
+                        margin: const EdgeInsets.only(left: 60.0, right: 60.0),
+                        child: MaterialButton(
+                          // minWidth: 100,
+                          height: 40.0,
+                          padding: const EdgeInsets.all(8.0),
+                          color: Colors.white,
+                          textColor: const Color(0xFF0C8913),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              side: const BorderSide(
+                                width: 2.50,
+                                color: Color(0xFF0C8913),
+                              )),
+                          child: const Text('Masuk sebagai Driver'),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                const SizedBox(height: 10),
-                Column(
-                  children: [
-                    Container(
-                      width: size.width,
-                      margin: EdgeInsets.only(left: 60.0, right: 60.0),
-                      child: MaterialButton(
-                        // minWidth: 100,
-                        height: 40.0,
-                        padding: const EdgeInsets.all(8.0),
-                        color: const Color(0xFF0C8913),
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(
-                              width: 2.50,
-                              color: Color(0xFF0C8913),
-                            )),
-                        child: const Text('Masuk sebagai Customer'),
-                        onPressed: () {},
-                      ),
-                    ),
-                    const SizedBox(height: 8.0),
-                    Container(
-                      width: size.width,
-                      margin: EdgeInsets.only(left: 60.0, right: 60.0),
-                      child: MaterialButton(
-                        // minWidth: 100,
-                        height: 40.0,
-                        padding: const EdgeInsets.all(8.0),
-                        color: Colors.white,
-                        textColor: const Color(0xFF0C8913),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(
-                              width: 2.50,
-                              color: Color(0xFF0C8913),
-                            )),
-                        child: const Text('Masuk sebagai Driver'),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
