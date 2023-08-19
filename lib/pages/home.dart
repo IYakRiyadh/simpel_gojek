@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                   )
                                                 : Text(
-                                                    'Rp. -',
+                                                    'Rp. 835.000',
                                                     style: TextStyle(
                                                       fontSize: 17.0,
                                                       fontWeight:
@@ -249,9 +249,13 @@ class _HomePageState extends State<HomePage> {
                                 );
                               },
                               options: CarouselOptions(
+                                autoPlay: true,
                                 height: 120,
                                 enlargeFactor: 0.2,
                                 enlargeCenterPage: true,
+                                autoPlayInterval: const Duration(seconds: 15),
+                                autoPlayAnimationDuration:
+                                    const Duration(milliseconds: 1000),
                                 viewportFraction: 0.80,
                                 initialPage: aktifSlide,
                                 enableInfiniteScroll: false,
