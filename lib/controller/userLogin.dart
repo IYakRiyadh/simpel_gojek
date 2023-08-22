@@ -1,4 +1,4 @@
-import 'package:app_gojek/pages/form/login.dart';
+import 'package:app_gojek/pages/form/intro.dart';
 import 'package:app_gojek/pages/navigasi/navigation.dart';
 import 'package:flutter/material.dart';
 

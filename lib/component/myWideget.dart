@@ -29,3 +29,14 @@ final List<String> lebelMenu = [
   'GoClub',
   'Lainnya',
 ];
+
+final List<String> nomerVal = [
+  'GoRide',
+  'GoCar',
+  'GoFood',
+  'GoSend',
+  'GoMart',
+  'GoPulsa',
+  'GoClub',
+  'Lainnya',
+];

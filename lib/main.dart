@@ -1,5 +1,5 @@
 import 'package:app_gojek/firebase_options.dart';
-import 'package:app_gojek/pages/form/login.dart';
+import 'package:app_gojek/pages/form/intro.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:app_gojek/pages/home.dart';

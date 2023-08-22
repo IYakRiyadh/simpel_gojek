@@ -1,149 +1,122 @@
-import 'package:app_gojek/pages/navigasi/navigation.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class IntroUser extends StatefulWidget {
-  const IntroUser({super.key});
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class LoginForm extends StatefulWidget {
+  const LoginForm({super.key});
 
   @override
-  State<IntroUser> createState() => _IntroUserState();
+  State<LoginForm> createState() => _LoginFormState();
 }
 
-class _IntroUserState extends State<IntroUser> {
-  final intro = FirebaseFirestore.instance;
-  Stream<QuerySnapshot<Map<String, dynamic>>>? stream;
+class _LoginFormState extends State<LoginForm> {
+  List data = [];
+  var valData;
 
   @override
   void initState() {
     super.initState();
-    stream = intro.collection('intro').snapshots();
+    getCallingCode();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    stream: stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Center(child: Text('No Internet'));
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
-                        return const Center(child: Text('Loading..'));
-                      }
-                      final slide =
-                          snapshot.data!.docs.map((doc) => doc.data()).toList();
-
-                      return CarouselSlider.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index, realIndex) {
-                          var data = slide[index];
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15.0, vertical: 10.0),
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      image: DecorationImage(
-                                        image: NetworkImage('${data['img']}'),
-                                        fit: BoxFit.fill,
-                                        alignment: Alignment.center,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 20.0,
-                                      top: 15,
-                                      right: 20,
-                                      bottom: 15.0),
-                                  child: Text(
-                                    '${data['keterangan']}',
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 16.5,
-                                      fontFamily: 'Poppins',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        options: CarouselOptions(
-                          aspectRatio: 4 / 3,
-                          autoPlay: true,
-                          viewportFraction: 1.0,
-                          enlargeFactor: 0.5,
-                          enlargeCenterPage: true,
+      body: Center(
+        child: Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(20.0),
+              //     child: Flex(
+              //       direction: Axis.vertical,
+              //       children: [
+              //         Container(
+              //           width: 80.0,
+              //           height: 80.0,
+              //           decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(15.0),
+              //             color: Colors.lightBlue,
+              //           ),
+              //         ),
+              //         Container(child: Text('data \nsaya'))
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              SizedBox(
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    prefixStyle: TextStyle(color: Colors.black),
+                    prefix: Container(
+                      width: 80,
+                      padding: EdgeInsets.only(right: 10),
+                      margin: EdgeInsets.only(right: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            width: 2.0,
+                            color: Color(0xFF0C8913),
+                          ),
                         ),
-                      );
-                    }),
-                const SizedBox(height: 15),
-                Column(
-                  children: [
-                    Container(
-                      width: size.width,
-                      margin: const EdgeInsets.only(left: 60.0, right: 60.0),
-                      child: MaterialButton(
-                        // minWidth: 100,
-                        height: 40.0,
-                        padding: const EdgeInsets.all(8.0),
-                        color: const Color(0xFF0C8913),
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(
-                              width: 2.50,
-                              color: Color(0xFF0C8913),
-                            )),
-                        child: const Text('Masuk sebagai Customer'),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => NavigasiBarBottom(),
-                          ));
+                      ),
+                      child: DropdownButtonFormField(
+                        elevation: 0,
+                        isExpanded: true,
+                        isDense: false,
+                        items: data.map((e) {
+                          return DropdownMenuItem(
+                              value: e,
+                              child: Text(
+                                e['dial_code'],
+                              ));
+                        }).toList(),
+                        onChanged: (value) {
+                          setState(() {
+                            valData = value;
+                          });
                         },
+                        value: valData,
                       ),
                     ),
-                    const SizedBox(height: 8.0),
-                    Container(
-                      width: size.width,
-                      margin: const EdgeInsets.only(left: 60.0, right: 60.0),
-                      child: MaterialButton(
-                        // minWidth: 100,
-                        height: 40.0,
-                        padding: const EdgeInsets.all(8.0),
-                        color: Colors.white,
-                        textColor: const Color(0xFF0C8913),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            side: const BorderSide(
-                              width: 2.50,
-                              color: Color(0xFF0C8913),
-                            )),
-                        child: const Text('Masuk sebagai Driver'),
-                        onPressed: () {},
-                      ),
+                    hintText: 'Ketik Nomer',
+                    contentPadding: const EdgeInsets.only(
+                      left: 15.0,
                     ),
-                  ],
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 3.5, color: Color(0xFF0C8913)),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(width: 2.0, color: Colors.black87),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> getCallingCode() async {
+    final respon = await http.get(Uri.parse(
+        'https://gist.githubusercontent.com/anubhavshrimal/75f6183458db8c453306f93521e93d37/raw/f77e7598a8503f1f70528ae1cbf9f66755698a16/CountryCodes.json'));
+
+    if (respon.statusCode == 200) {
+      // final val = ;
+      setState(() {
+        data = jsonDecode(respon.body);
+      });
+    }
   }
 }
